@@ -39,7 +39,7 @@ fun MessageCard(msg: Message) {
 fun PreviewMessageCard() {
     MessageCard(
         msg = Message("Lexi", "Hey, take a look at JectPack")
-    );
+    )
 }
 
 
