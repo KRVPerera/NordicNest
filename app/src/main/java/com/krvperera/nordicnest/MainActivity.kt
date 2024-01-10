@@ -19,12 +19,29 @@ class MainActivity : ComponentActivity() {
             NordicNestTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                    Greeting("Android")
+                    Greeting("World")
                 }
             }
         }
     }
 }
+
+data class Message(val author: String, val body: String)
+
+@Composable
+fun MessageCard(msg: Message) {
+    Text(text = msg.author)
+    Text(text = msg.body)
+}
+
+@Preview
+@Composable
+fun PreviewMessageCard() {
+    MessageCard(
+        msg = Message("Lexi", "Hey, take a look at JectPack")
+    );
+}
+
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
