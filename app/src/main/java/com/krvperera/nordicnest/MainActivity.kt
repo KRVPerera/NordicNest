@@ -54,7 +54,7 @@ class MainActivity : ComponentActivity() {
 }
 
 data class Message(val author: String, val body: String)
-
+2
 @Composable
 fun MessageCard(msg: Message) {
     Row(modifier = Modifier.padding(all = 8.dp)) {
@@ -73,7 +73,7 @@ fun MessageCard(msg: Message) {
         var isExpanded by remember { mutableStateOf(false) }
 
         val surfaceColor by animateColorAsState(
-            if (isExpanded) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface,
+            if (isExpanded) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceVariant,
         )
 
         Column(modifier = Modifier.clickable { isExpanded = !isExpanded }) {
@@ -117,15 +117,6 @@ fun PreviewMessageCard() {
             )
         }
     }
-}
-
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
 }
 
 @Composable
