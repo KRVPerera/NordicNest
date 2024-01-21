@@ -1,5 +1,6 @@
 package com.krvperera.nordicnest
 
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -67,18 +68,23 @@ fun MessageCard(msg: Message) {
             Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = msg.body,
-
+                modifier = Modifier.padding(all = 4.dp),
+                style = MaterialTheme.typography.bodyMedium
             )
         }
     }
 }
 
-@Preview
+@Preview(name = "Light Mode")
+@Preview(name = "Dark Mode",
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    showBackground = true
+    )
 @Composable
 fun PreviewMessageCard() {
     NordicNestTheme {
         // A surface container using the 'background' color from the theme
-        Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+        Surface {
             MessageCard(
                 msg = Message("Lexi", "Hey, take a look at Jet Pack")
             )
