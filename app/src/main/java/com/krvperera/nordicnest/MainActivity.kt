@@ -54,7 +54,7 @@ class MainActivity : ComponentActivity() {
 }
 
 data class Message(val author: String, val body: String)
-2
+
 @Composable
 fun MessageCard(msg: Message) {
     Row(modifier = Modifier.padding(all = 8.dp)) {
