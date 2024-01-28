@@ -19,7 +19,6 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.krvperera.nordicnest.ui.theme.NordicNestTheme
 
-
 @Composable
 fun NavButtons(navController: NavController, screenName: String) {
     Surface {

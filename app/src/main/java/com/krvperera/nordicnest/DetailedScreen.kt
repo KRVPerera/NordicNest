@@ -13,7 +13,6 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.krvperera.nordicnest.ui.theme.NordicNestTheme
 
-
 @Composable
 fun DetailedScreen(navController: NavController) {
     Column (modifier = Modifier.padding(all = 8.dp)) {
