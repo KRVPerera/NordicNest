@@ -24,11 +24,15 @@ fun NavButtons(navController: NavController) {
         Row(
             modifier = Modifier.padding(all = 8.dp),
             verticalAlignment = Alignment.Bottom,
-            horizontalArrangement = Arrangement.Absolute.Left
+            horizontalArrangement = Arrangement.Center
         ) {
             Button(
                 onClick = {
-                    navController.navigate(Screen.MainScreen.route)
+                    navController.navigate(Screen.MainScreen.route) {
+                        popUpTo(Screen.MainScreen.route) {
+                            inclusive = true
+                        }
+                    }
                 },
                 modifier = Modifier.align(Alignment.Bottom)
             ) {
@@ -37,7 +41,11 @@ fun NavButtons(navController: NavController) {
             Spacer(modifier = Modifier.width(8.dp))
             Button(
                 onClick = {
-                    navController.navigate(Screen.DetailedScreen.route)
+                    navController.navigate(Screen.DetailedScreen.route) {
+                        popUpTo(Screen.DetailedScreen.route) {
+                            inclusive = true
+                        }
+                    }
                 },
                 modifier = Modifier.align(Alignment.Bottom)
             ) {
@@ -46,7 +54,11 @@ fun NavButtons(navController: NavController) {
             Spacer(modifier = Modifier.width(8.dp))
             Button(
                 onClick = {
-                    navController.navigate(Screen.DetailedScreen.route)
+                    navController.navigate(Screen.DetailedScreen.route) {
+                        popUpTo(Screen.DetailedScreen.route) {
+                            inclusive = true
+                        }
+                    }
                 },
                 modifier = Modifier.align(Alignment.Bottom)
             ) {
