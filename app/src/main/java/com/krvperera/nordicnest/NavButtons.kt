@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,13 +21,15 @@ import com.krvperera.nordicnest.ui.theme.NordicNestTheme
 
 
 @Composable
-fun NavButtons(navController: NavController) {
+fun NavButtons(navController: NavController, screenName: String) {
     Surface {
         Row(
             modifier = Modifier.padding(all = 8.dp),
             verticalAlignment = Alignment.Bottom,
             horizontalArrangement = Arrangement.Center
         ) {
+            var color = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondary)
+            var colorN = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
             Button(
                 onClick = {
                     navController.navigate(Screen.MainScreen.route) {
@@ -34,6 +38,7 @@ fun NavButtons(navController: NavController) {
                         }
                     }
                 },
+                colors = if (screenName == "HOME") color else  colorN,
                 modifier = Modifier.align(Alignment.Bottom)
             ) {
                 Text(text = "Home")
@@ -47,6 +52,7 @@ fun NavButtons(navController: NavController) {
                         }
                     }
                 },
+                colors = if (screenName == "DETAILED") color else  colorN,
                 modifier = Modifier.align(Alignment.Bottom)
             ) {
                 Text(text = "Details")
@@ -54,12 +60,13 @@ fun NavButtons(navController: NavController) {
             Spacer(modifier = Modifier.width(8.dp))
             Button(
                 onClick = {
-                    navController.navigate(Screen.DetailedScreen.route) {
-                        popUpTo(Screen.DetailedScreen.route) {
+                    navController.navigate(Screen.SettingsScreen.route) {
+                        popUpTo(Screen.SettingsScreen.route) {
                             inclusive = true
                         }
                     }
                 },
+                colors = if (screenName == "SETTINGS") color else  colorN,
                 modifier = Modifier.align(Alignment.Bottom)
             ) {
                 Text(text = "Settings")
@@ -73,6 +80,6 @@ fun NavButtons(navController: NavController) {
 fun PreviewNavButtons() {
     val navController = rememberNavController()
     NordicNestTheme {
-        NavButtons(navController)
+        NavButtons(navController, "HOME")
     }
 }

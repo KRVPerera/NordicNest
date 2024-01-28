@@ -15,22 +15,22 @@ import com.krvperera.nordicnest.ui.theme.NordicNestTheme
 
 
 @Composable
-fun DetailedScreen(navController: NavController) {
+fun SettingsScreen(navController: NavController) {
     Column (modifier = Modifier.padding(all = 8.dp)) {
-        Title("Details")
+        Title("Settings")
         Spacer(modifier = Modifier.fillMaxSize(0.9f))
-        NavButtons(navController, "DETAILED")
+        NavButtons(navController, "SETTINGS")
     }
 }
 
 @Composable
 @Preview
-fun PreviewDetailedScreen() {
+fun PreviewSettingsScreen() {
     NordicNestTheme {
         val navController = rememberNavController()
         // A surface container using the 'background' color from the theme
         Surface {
-            DetailedScreen(navController)
+            SettingsScreen(navController)
         }
     }
 }
