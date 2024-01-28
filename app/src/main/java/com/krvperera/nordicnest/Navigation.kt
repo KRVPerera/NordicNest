@@ -16,7 +16,7 @@ fun Navigation() {
         composable(route = Screen.DetailedScreen.route) {
             DetailedScreen(navController = navController)
         }
-        composable(route = Screen.DetailedScreen.route) {
+        composable(route = Screen.SettingsScreen.route) {
             SettingsScreen(navController = navController)
         }
     }
