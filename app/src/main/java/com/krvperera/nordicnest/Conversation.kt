@@ -20,7 +20,7 @@ object TopWithFooter : Arrangement.Vertical {
         }
         if (y < totalSize) {
             val lastIndex = outPositions.lastIndex
-            outPositions[lastIndex] = totalSize - sizes.last()
+            outPositions[lastIndex-1] = totalSize - sizes.last()
         }
     }
 }
