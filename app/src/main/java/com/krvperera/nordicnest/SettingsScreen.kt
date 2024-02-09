@@ -37,7 +37,7 @@ fun SettingsScreen(navController: NavController) {
                 .border(1.5.dp, MaterialTheme.colorScheme.primary, CircleShape)
                 .align(Alignment.CenterHorizontally)
         )
-        Spacer(modifier = Modifier.fillMaxSize(0.9f))
+        Spacer(modifier = Modifier.fillMaxSize(0.5f))
         NavButtons(navController, "SETTINGS")
     }
 }

@@ -1,9 +1,11 @@
 package com.krvperera.nordicnest
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.krvperera.nordicnest.ui.theme.NordicNestTheme
 
 @Composable
 fun Navigation() {
