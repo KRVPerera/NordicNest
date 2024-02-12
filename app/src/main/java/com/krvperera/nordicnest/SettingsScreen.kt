@@ -2,7 +2,6 @@ package com.krvperera.nordicnest
 
 import android.Manifest
 import android.content.ContentResolver
-import android.content.res.Resources
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
@@ -32,6 +31,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
@@ -39,6 +39,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.SubcomposeAsyncImage
+import coil.request.ImageRequest
+import java.io.File
 
 
 @Composable
@@ -59,75 +61,12 @@ fun rememberResourceUri(resourceId: Int): Uri {
 
 @Composable
 fun SettingsScreen(navController: NavController) {
-    var isInternetPermissionGiven by remember { mutableStateOf(false) }
-    var fabHeight by remember { mutableStateOf(0.dp) }
-    var selectedImageUri by remember { mutableStateOf<Uri?>(null) }
-
-    val launcher = rememberLauncherForActivityResult(contract = ActivityResultContracts.RequestPermission(),
-        onResult = { isGranted ->
-        if (isGranted) {
-            isInternetPermissionGiven = true
-        }
-    })
-
-    val imagePicker = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.PickVisualMedia(),
-        onResult = { uri ->
-            if (uri != null) {
-                selectedImageUri = uri
-            }
-    })
-
-    if (!isInternetPermissionGiven) {
-        SideEffect {
-            launcher.launch(Manifest.permission.INTERNET)
-        }
-    }
+//    var isInternetPermissionGiven by remember { mutableStateOf(false) }
     Column (modifier = Modifier.padding(all = 8.dp)) {
         Title("Settings")
         Spacer(modifier = Modifier.height(8.dp))
         Column (modifier = Modifier.align(Alignment.CenterHorizontally)) {
-            if (isInternetPermissionGiven) {
-                SubcomposeAsyncImage(
-                    model = selectedImageUri,
-//                    model = "https://images.unsplash.com/photo-1468853692559-fc594e932a2d?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                    loading = {
-                        CircularProgressIndicator()
-                    },
-                    contentScale = ContentScale.FillWidth,
-                    contentDescription = "Asd",
-                    modifier = Modifier
-                        .size(300.dp)
-                        .clip(CircleShape)
-                        .border(1.5.dp, MaterialTheme.colorScheme.primary, CircleShape)
-                        .align(Alignment.CenterHorizontally)
-                )
-            } else {
-                Image(
-                    painter = painterResource(R.drawable.me),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(300.dp)
-                        .clip(CircleShape)
-                        .border(1.5.dp, MaterialTheme.colorScheme.primary, CircleShape)
-                        .align(Alignment.CenterHorizontally)
-                )
-            }
-            FloatingActionButton(
-                shape = CircleShape,
-                onClick = {
-                    imagePicker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
-                },
-                modifier = Modifier
-                    .onGloballyPositioned { coordinates ->
-                        // Update the state with the height of the FAB
-                        fabHeight = coordinates.size.height.dp
-                    }
-                    .offset(y = (-fabHeight / 2))
-                    .align(Alignment.CenterHorizontally)
-            ) {
-            Icon(Icons.Filled.Add, "Floating action button.")
-        }
+            ProfilePicture()
         }
         Spacer(modifier = Modifier.fillMaxSize(0.5f))
         NavButtons(navController, "SETTINGS")
