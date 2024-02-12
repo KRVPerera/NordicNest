@@ -37,7 +37,7 @@ fun ProfilePicture() {
     var fabHeight by remember { mutableStateOf(0.dp) }
     val context = LocalContext.current
     val targetFile = File(context.filesDir, "user-profile.jpg")
-    var imageUri by remember { mutableStateOf<Uri>(Uri.fromFile(targetFile)) }
+    var imageUri by remember { mutableStateOf<Any>(if (targetFile.exists()) Uri.fromFile(targetFile) else R.drawable.me) }
     var imageUpdateKey by remember { mutableStateOf(System.currentTimeMillis()) }
 
     val imagePicker = rememberLauncherForActivityResult(

@@ -28,6 +28,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
+import coil.compose.SubcomposeAsyncImage
 import coil.compose.rememberAsyncImagePainter
 import com.krvperera.nordicnest.ui.theme.NordicNestTheme
 import java.io.File
@@ -39,13 +41,10 @@ data class Message(val author: String, val body: String)
 fun MessageCard(msg: Message) {
     val context = LocalContext.current
     val targetFile = File(context.filesDir, "user-profile.jpg")
-    val imageUri by remember { mutableStateOf<Uri>(Uri.fromFile(targetFile)) }
-    val painter = rememberAsyncImagePainter(
-        model = imageUri,
-    )
+    val imageUri by remember { mutableStateOf<Any>(if (targetFile.exists()) Uri.fromFile(targetFile) else R.drawable.me) }
     Row(modifier = Modifier.padding(all = 8.dp)) {
-        Image(
-            painter = painter,
+        AsyncImage(
+            model = imageUri,
             contentDescription = null,
             modifier = Modifier
                 .size(40.dp)
@@ -53,7 +52,6 @@ fun MessageCard(msg: Message) {
                 .border(1.5.dp, MaterialTheme.colorScheme.primary, CircleShape)
         )
 
-        // Add a horizontal space between the image and the column
         Spacer(modifier = Modifier.width(8.dp))
 
         var isExpanded by remember { mutableStateOf(false) }
