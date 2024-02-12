@@ -1,6 +1,7 @@
 package com.krvperera.nordicnest
 
 import android.content.res.Configuration
+import android.net.Uri
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
@@ -24,19 +25,28 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.rememberAsyncImagePainter
 import com.krvperera.nordicnest.ui.theme.NordicNestTheme
+import java.io.File
 
 
 data class Message(val author: String, val body: String)
 
 @Composable
 fun MessageCard(msg: Message) {
+    val context = LocalContext.current
+    val targetFile = File(context.filesDir, "user-profile.jpg")
+    val imageUri by remember { mutableStateOf<Uri>(Uri.fromFile(targetFile)) }
+    val painter = rememberAsyncImagePainter(
+        model = imageUri,
+    )
     Row(modifier = Modifier.padding(all = 8.dp)) {
         Image(
-            painter = painterResource(R.drawable.me),
+            painter = painter,
             contentDescription = null,
             modifier = Modifier
                 .size(40.dp)
