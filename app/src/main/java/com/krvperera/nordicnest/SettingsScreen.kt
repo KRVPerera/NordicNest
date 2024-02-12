@@ -73,7 +73,9 @@ fun SettingsScreen(navController: NavController) {
     val imagePicker = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia(),
         onResult = { uri ->
-            selectedImageUri = uri
+            if (uri != null) {
+                selectedImageUri = uri
+            }
     })
 
     if (!isInternetPermissionGiven) {
