@@ -26,6 +26,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -40,6 +41,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.SubcomposeAsyncImage
+import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import java.io.File
 
@@ -49,14 +51,8 @@ fun ProfilePicture() {
     var fabHeight by remember { mutableStateOf(0.dp) }
     val context = LocalContext.current
     val targetFile = File(context.filesDir, "user-profile.jpg")
-    var imageRequest by remember {
-        mutableStateOf<ImageRequest>(
-            ImageRequest.Builder(context)
-                .data(Uri.fromFile(targetFile))
-                .data(if (targetFile.exists()) Uri.fromFile(targetFile) else R.drawable.me)
-                .build()
-        )
-    }
+    var imageUri by remember { mutableStateOf<Uri>(Uri.fromFile(targetFile)) }
+    var imageUpdateKey by remember { mutableStateOf(System.currentTimeMillis()) }
 
     val imagePicker = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia(),
@@ -68,28 +64,27 @@ fun ProfilePicture() {
                         inputStream?.copyTo(fileOutputStream)
                     }
                 }
-                // Update the imageRequest to reflect the new image
-                imageRequest = ImageRequest.Builder(context)
-                    .data(Uri.fromFile(saveTarget))
-                    .build()
+                imageUri = Uri.fromFile(saveTarget)
+                imageUpdateKey = System.currentTimeMillis()
             }
         })
 
     Column() {
-//    Column(modifier = Modifier.align(Alignment.CenterHorizontally)) {
-        SubcomposeAsyncImage(
-            model = imageRequest,
-            loading = {
-                CircularProgressIndicator()
-            },
-            contentScale = ContentScale.FillWidth,
-            contentDescription = "Asd",
-            modifier = Modifier
-                .size(300.dp)
-                .clip(CircleShape)
-                .border(1.5.dp, MaterialTheme.colorScheme.primary, CircleShape)
-                .align(Alignment.CenterHorizontally)
-        )
+        key(imageUpdateKey) {
+            SubcomposeAsyncImage(
+                model = imageUri,
+                loading = {
+                    CircularProgressIndicator()
+                },
+                contentScale = ContentScale.FillWidth,
+                contentDescription = "Asd",
+                modifier = Modifier
+                    .size(300.dp)
+                    .clip(CircleShape)
+                    .border(1.5.dp, MaterialTheme.colorScheme.primary, CircleShape)
+                    .align(Alignment.CenterHorizontally)
+            )
+        }
         FloatingActionButton(
             shape = CircleShape,
             onClick = {
@@ -106,10 +101,6 @@ fun ProfilePicture() {
             Icon(Icons.Filled.Add, "Floating action button.")
         }
     }
-
-//    fun checkPermissionForInternet(permission: String): Boolean {
-//        return ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
-//    }
 }
 
 
